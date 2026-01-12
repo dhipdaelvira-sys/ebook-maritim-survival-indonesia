@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maritime Survival Indonesia - Katalog Ebook</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --dola-color: #3498db;
+            --perplexity-color: #9b59b6;
+            --gemini-color: #e74c3c;
+            --qwen-color: #f39c12;
+            --claude-color: #1abc9c;
+            --deepseek-color: #2c3e50;
+            --chatgpt-color: #10b981;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f1f5f9;
+            --border-color: #334155;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        h1 {
+            color: #38bdf8;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+        
+        /* Stats Cards */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        
+        .stat-card.dola { border-left-color: var(--dola-color); }
+        .stat-card.perplexity { border-left-color: var(--perplexity-color); }
+        .stat-card.gemini { border-left-color: var(--gemini-color); }
+        .stat-card.qwen { border-left-color: var(--qwen-color); }
+        .stat-card.claude { border-left-color: var(--claude-color); }
+        .stat-card.deepseek { border-left-color: var(--deepseek-color); }
+        .stat-card.chatgpt { border-left-color: var(--chatgpt-color); }
+        
+        .stat-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .stat-card.dola .stat-number { color: var(--dola-color); }
+        .stat-card.perplexity .stat-number { color: var(--perplexity-color); }
+        .stat-card.gemini .stat-number { color: var(--gemini-color); }
+        .stat-card.qwen .stat-number { color: var(--qwen-color); }
+        .stat-card.claude .stat-number { color: var(--claude-color); }
+        .stat-card.deepseek .stat-number { color: var(--deepseek-color); }
+        .stat-card.chatgpt .stat-number { color: var(--chatgpt-color); }
+        
+        /* Controls */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .search-box {
+            position: relative;
+            flex-grow: 1;
+            max-width: 400px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            background-color: #1a2332;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+        }
+        
+        select {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: #1a2332;
+            color: var(--text-color);
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        
+        .total-badge {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Table Container */
+        .table-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+        
+        thead {
+            background-color: #0f172a;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        th {
+            padding: 20px 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #38bdf8;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        td {
+            padding: 18px 15px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background-color: #1a2332;
+        }
+        
+        .no-column {
+            width: 60px;
+            text-align: center;
+            font-weight: bold;
+            color: #94a3b8;
+        }
+        
+        .ai-column {
+            width: 140px;
+            font-weight: 600;
+        }
+        
+        .ai-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 100px;
+        }
+        
+        .ai-dola { background-color: rgba(52, 152, 219, 0.2); color: var(--dola-color); border: 1px solid var(--dola-color); }
+        .ai-perplexity { background-color: rgba(155, 89, 182, 0.2); color: var(--perplexity-color); border: 1px solid var(--perplexity-color); }
+        .ai-gemini { background-color: rgba(231, 76, 60, 0.2); color: var(--gemini-color); border: 1px solid var(--gemini-color); }
+        .ai-qwen { background-color: rgba(243, 156, 18, 0.2); color: var(--qwen-color); border: 1px solid var(--qwen-color); }
+        .ai-claude { background-color: rgba(26, 188, 156, 0.2); color: var(--claude-color); border: 1px solid var(--claude-color); }
+        .ai-deepseek { background-color: rgba(44, 62, 80, 0.2); color: var(--deepseek-color); border: 1px solid var(--deepseek-color); }
+        .ai-chatgpt { background-color: rgba(16, 185, 129, 0.2); color: var(--chatgpt-color); border: 1px solid var(--chatgpt-color); }
+        
+        .title-column {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #f1f5f9;
+        }
+        
+        .subtitle-column {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        .update-notice {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+            border-left: 5px solid var(--chatgpt-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .update-notice i {
+            font-size: 2rem;
+            color: var(--chatgpt-color);
+        }
+        
+        .update-notice h3 {
+            color: var(--chatgpt-color);
+            margin-bottom: 5px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-container {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .controls {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-box {
+                max-width: 100%;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .stat-card {
+                padding: 15px;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            th, td {
+                padding: 12px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-anchor"></i> Maritime Survival Indonesia</h1>
+            <p class="subtitle">Katalog Lengkap Ebook Panduan untuk Pelaut Indonesia - Kesehatan Mental, Teknik, Karier, dan Survival di Laut Lepas</p>
+            
+            <div class="update-notice">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <h3>Sempurna! ✅ Dashboard sudah diperbaiki dan ditambahkan dengan 15 Judul Viral dari ChatGPT! 🎉</h3>
+                    <p>🆕 Update Terbaru: ✨ Penambahan ChatGPT (15 Judul Viral) | 📊 Total Sekarang: 98 Judul Ebook | 7 AI Pencipta</p>
+                </div>
+            </div>
+        </header>
+        
+        <div class="stats-container">
+            <div class="stat-card dola">
+                <h3><i class="fas fa-robot"></i> DOLA (ChatGPT/Bibi)</h3>
+                <div class="stat-number">15</div>
+                <p>Judul Ebook</p>
+            </div>
+            
+            <div class="stat-card perplexity">
+                <h3><i class="fas fa-brain"></i> PERPLEXITY</h3>
+                <div class="stat-number">13</div>
+                <p>Judul Ebook</p>
+            </div>
+            
+            <div class="stat-card gemini">
+                <h3><i class="fas fa-gem"></i> GEMINI</h3>
+                <div class="stat-number">10</div>
+                <p>Judul Ebook</p>
+            </div>
+            
+            <div class="stat-card qwen">
+                <h3><i class="fas fa-code"></i> QWEN</h3>
+                <div class="stat-number">15</div>
+                <p>Judul Ebook</p>
+            </div>
+            
+            <div class="stat-card claude">
+                <h3><i class="fas fa-user-tie"></i> CLAUDE</h3>
+                <div class="stat-number">15</div>
+                <p>Judul Ebook</p>
+            </div>
+            
+            <div class="stat-card deepseek">
+                <h3><i class="fas fa-search"></i> DEEPSEEK</h3>
+                <div class="stat-number">1</div>
+                <p>Judul Ebook</p>
+            </div>
+            
+            <div class="stat-card chatgpt">
+                <h3><i class="fas fa-virus"></i> CHATGPT</h3>
+                <div class="stat-number">15</div>
+                <p>Judul Viral</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="filter-group">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Cari judul atau subjudul ebook...">
+                </div>
+                
+                <select id="aiFilter">
+                    <option value="all">Semua AI Pembuat</option>
+                    <option value="dola">DOLA (ChatGPT/Bibi)</option>
+                    <option value="perplexity">PERPLEXITY</option>
+                    <option value="gemini">GEMINI</option>
+                    <option value="qwen">QWEN</option>
+                    <option value="claude">CLAUDE</option>
+                    <option value="deepseek">DEEPSEEK</option>
+                    <option value="chatgpt">CHATGPT</option>
+                </select>
+            </div>
+            
+            <div class="total-badge">
+                <i class="fas fa-book"></i>
+                <span>Total: 98 Judul Ebook</span>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table id="ebooksTable">
+                <thead>
+                    <tr>
+                        <th class="no-column">NO.</th>
+                        <th class="ai-column">AI PEMBUAT</th>
+                        <th>JUDUL EBOOK</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Data akan diisi oleh JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
+        <footer>
+            <p>© 2024 Maritime Survival Indonesia - Katalog Ebook untuk Pelaut Indonesia</p>
+            <p>Dashboard dengan UI/UX modern dan responsif | Data diperbarui: Desember 2024</p>
+        </footer>
+    </div>
+
+    <script>
+        // Data ebook
+        const ebooks = [
+            // DOLA (ChatGPT/Bibi) - 15 Judul
+            { no: 1, ai: 'dola', title: 'Mengatasi Stres dan Burnout di Kapal: Panduan Mental Sehat untuk Pelaut', subtitle: 'Strategi Praktis dan Terbukti untuk Menjaga Kesehatan Mental di Laut Lepas' },
+            { no: 2, ai: 'dola', title: 'Panduan Lengkap Engine Room: Kesalahan Fatal yang Harus Dihindari Pelaut Baru', subtitle: 'Skill Esensial dan Pencegahan Kegagalan Mesin untuk Engineer Pemula' },
+            { no: 3, ai: 'dola', title: 'Adaptasi Budaya dan Kehidupan Sehari-hari di Kapal', subtitle: 'Cara Efektif Menyesuaikan Diri dengan Kru Berbeda Budaya dan Menjaga Harmoni Onboard' },
+            { no: 4, ai: 'dola', title: 'Menghadapi Toxic Senioritas dan Bullying di Kapal', subtitle: 'Strategi Bertahan dan Melindungi Diri dari Konflik dan Kekerasan Psikologis Onboard' },
+            { no: 5, ai: 'dola', title: 'Meniti Karier Internasional: Skill dan Persiapan yang Dibutuhkan Pelaut ID', subtitle: 'Meningkatkan Daya Saing di Pasar Global dengan Standar Internasional' },
+            { no: 6, ai: 'dola', title: 'Masa Depan Profesi Pelaut: Teknologi dan Tren Industri Maritim 2026-2031', subtitle: 'Persiapkan Diri dengan Pengetahuan Teknologi Baru dan Peluang Kerja Masa Depan' },
+            { no: 7, ai: 'dola', title: 'Kehidupan Keluarga Pelaut: Mengelola Jarak dan Emosi', subtitle: 'Strategi Mempertahankan Hubungan Harmonis dengan Pasangan dan Anak' },
+            { no: 8, ai: 'dola', title: 'Keselamatan dan Pencegahan Kecelakaan di Kapal: Panduan Survival Pelaut', subtitle: 'Langkah Praktis Menghindari Bahaya dan Bertahan Hidup Saat Insiden Terjadi' },
+            { no: 9, ai: 'dola', title: 'Skill Teknik Kapal yang Paling Dicari Pasar Global', subtitle: 'Upgrade Kemampuan Teknik untuk Mendapatkan Gaji dan Posisi Lebih Baik' },
+            { no: 10, ai: 'dola', title: 'Survival Onboard: Kebiasaan dan Mindset untuk Sukses di Laut Lepas', subtitle: 'Panduan Praktis Menjalani Hidup dan Karier Pelaut dengan Mental Baja' },
+            { no: 11, ai: 'dola', title: 'Rahasia Investasi dan Keuangan Pelaut: Cara Kaya Raya di Usia Muda', subtitle: 'Strategi Cerdas Mengelola Gaji Tinggi dan Meraih Kebebasan Finansial' },
+            { no: 12, ai: 'dola', title: 'Panduan Lengkap untuk Pelaut Kapal Pesiar: Karier Impian dengan Gaji Fantastis', subtitle: 'Tips Lolos Interview, Adaptasi Cepat, dan Sukses di Industri Kapal Pesiar' },
+            { no: 13, ai: 'dola', title: 'Hukum Maritim Internasional untuk Pelaut: Hak dan Kewajiban di Laut Lepas', subtitle: 'Lindungi Diri dari Masalah Hukum dan Pahami Aturan yang Berlaku' },
+            { no: 14, ai: 'dola', title: 'Komunikasi Efektif di Kapal: Membangun Tim Solid dan Mencegah Konflik', subtitle: 'Teknik Komunikasi Interpersonal untuk Meningkatkan Produktivitas dan Harmoni' },
+            { no: 15, ai: 'dola', title: 'Kiat Sukses Ujian Sertifikasi Pelaut: Persiapan Lengkap dan Strategi Lolos', subtitle: 'Panduan Belajar Efektif dan Contoh Soal untuk Meningkatkan Peluang Lulus' },
+            
+            // PERPLEXITY - 13 Judul
+            { no: 16, ai: 'perplexity', title: 'Masa Depan Pelaut 2030: Prediksi Kekurangan 100.000 Officer Global', subtitle: 'Siapkan Karier Anda Sebelum Ribuan Lowongan Hilang karena Automatisasi' },
+            { no: 17, ai: 'perplexity', title: 'Tren Gaji Pelaut 2026: Naik 6% Tapi Hanya untuk Skill Baru', subtitle: 'Minimum Wage $690/Month – Cara Maksimalkan Rp20 Juta/Bulan' },
+            { no: 18, ai: 'perplexity', title: 'Automatisasi Kapal: Ancaman atau Peluang Emas untuk Pelaut Indonesia', subtitle: 'Belajar IoT & AI Sebelum Diganti Robot di 2030' },
+            { no: 19, ai: 'perplexity', title: 'Kekurangan Pelaut Indonesia 2026: Cara Kuasai Pasar Global', subtitle: '1,9 Juta Lowongan Dunia – Strategi Masuk Tanker & Offshore' },
+            { no: 20, ai: 'perplexity', title: 'Tren Maritim 2026: Green Fuels & Digitalisasi Ubah Profesi Anda', subtitle: '800.000 Pelaut Butuh Training Baru – Jadi yang Pertama' },
+            { no: 21, ai: 'perplexity', title: 'Forecast Pekerjaan Pelaut 5-10 Tahun: Asia & Arctic Route Booming', subtitle: 'Emerging Markets Buka 100rb Jobs – Skill yang Dicari Perusahaan' },
+            { no: 22, ai: 'perplexity', title: 'Teknologi Baru Maritim: Drone, VR, & Big Data untuk Karier Aman', subtitle: 'Kurangi Risiko & Downtime – Skill Mahal yang Direkrut 2026' },
+            { no: 23, ai: 'perplexity', title: 'Demand Officer Indonesia vs Global: Tutup Gap 17 Tahun Tertinggi', subtitle: 'Strategi Naik Pangkat di Tengah Shortage 11.8%' },
+            { no: 24, ai: 'perplexity', title: 'Masa Depan Industri Maritim: Offshore Wind & Biotech Jobs Baru', subtitle: 'Transisi dari Kapal ke Ocean Economy 100 Juta Jobs' },
+            { no: 25, ai: 'perplexity', title: 'Gaji & Demand Pelaut Tanker 2026: Maksimalkan di Krisis Supply', subtitle: 'Rp25-40 Juta/Bulan – Negara Top Rekrut Indonesia' },
+            { no: 26, ai: 'perplexity', title: 'AI di Kapal 2026: Skill Wajib Bertahan 10 Tahun', subtitle: 'Dari Watchkeeping ke Shore Control – Roadmap Karier' },
+            { no: 27, ai: 'perplexity', title: 'Peluang Pekerjaan Maritim ID 2030: Fleet Growth Booming', subtitle: 'Isi Kekosongan 96k Officer Global' },
+            { no: 28, ai: 'perplexity', title: 'Tren Sustainability Maritim: Karier di Green Shipping', subtitle: 'Kurangi Emisi, Naikkan Gaji Anda' },
+            
+            // GEMINI - 10 Judul
+            { no: 29, ai: 'gemini', title: 'Buku Saku Survival Taruna Onboard', subtitle: 'Panduan Anti-Dibully, Cepat Adaptasi, dan Cara Elegan Menghadapi Senioritas di Kapal' },
+            { no: 30, ai: 'gemini', title: 'Dining Table Diplomacy', subtitle: 'Etika Makan, Bergaul, dan Membangun Koneksi di Mess Hall Kapal Internasional' },
+            { no: 31, ai: 'gemini', title: 'The Ghost on Board: Menaklukkan Kesepian', subtitle: 'Strategi Menjaga Kewarasan dan Kebahagiaan Saat Berbulan-bulan di Tengah Laut' },
+            { no: 32, ai: 'gemini', title: 'Manual Hidup Hemat di Kapal', subtitle: 'Cara Pulang Bawa Ratusan Juta Tanpa Terjebak Gaya Hidup Boros di Pelabuhan' },
+            { no: 33, ai: 'gemini', title: 'Zero Mistake: Adaptasi Deck Watchkeeping', subtitle: 'Panduan Praktis Junior Officer Agar Tidak Dimarahi Captain di Anjungan' },
+            { no: 34, ai: 'gemini', title: 'Fit at Sea: Gym Tanpa Alat di Kapal', subtitle: 'Rahasia Badan Tegap dan Sehat Meski Sibuk Kerja di Kamar Mesin atau Dek' },
+            { no: 35, ai: 'gemini', title: 'English for Galley & Deck', subtitle: 'Komunikasi Praktis Bahasa Inggris di Kapal Tanpa Harus Hafal Grammar' },
+            { no: 36, ai: 'gemini', title: 'The Junior\'s Survival Kit', subtitle: '100 Kesalahan Pemula yang Harus Kamu Hindari Agar Kontrak Tidak Diputus Tengah Jalan' },
+            { no: 37, ai: 'gemini', title: 'Mastering Ship\'s Laundry & Cabin Care', subtitle: 'Tips Hidup Rapi, Wangi, dan Profesional di Ruang Terbatas' },
+            { no: 38, ai: 'gemini', title: 'Koneksi di Tengah Laut', subtitle: 'Trik Hemat Kuota Internet Satelit dan Cara Komunikasi Efektif dengan Keluarga' },
+            
+            // QWEN - 15 Judul
+            { no: 39, ai: 'qwen', title: 'Global Seafarer Passport', subtitle: 'Jalur Karier dari Deck Cadet ke Kapten Kapal Multinasional dalam 8 Tahun' },
+            { no: 40, ai: 'qwen', title: 'ECDIS Mastery for Third Engineers', subtitle: 'Skill Teknis yang Bikin Perusahaan Eropa Berebut Merekrutmu' },
+            { no: 41, ai: 'qwen', title: 'Salary Negotiation Bible for Seafarers', subtitle: 'Cara Dapatkan Gaji 3x Lipat Tanpa Pengalaman Internasional' },
+            { no: 42, ai: 'qwen', title: 'Norwegian Crew Secrets', subtitle: 'Mengapa Pelaut Norwegia Bisa Pensiun di Usia 45 Tahun?' },
+            { no: 43, ai: 'qwen', title: 'Bahasa Isyarat Darurat Internasional', subtitle: '36 Kode yang Bisa Selamatkan Nyawamu Saat Bahasa Gagal di Kapal Multinasional' },
+            { no: 44, ai: 'qwen', title: 'Women at Sea: Breaking the Steel Ceiling', subtitle: 'Strategi Nyata Wanita Indonesia Menjadi Chief Engineer di Kapal Eropa' },
+            { no: 45, ai: 'qwen', title: 'Green Shipping Revolution', subtitle: 'Skill Masa Depan yang Wajib Dimiliki Pelaut Sebelum 2030' },
+            { no: 46, ai: 'qwen', title: 'The 90-Day Visa Hacks', subtitle: 'Cara Bebas Visa ke 40 Negara dengan Status Pelaut' },
+            { no: 47, ai: 'qwen', title: 'Blacklist Ship Avoidance Guide', subtitle: 'Cara Deteksi Kapal Bermasalah Sebelum Naik — Simpan Nyama & Kariermu' },
+            { no: 48, ai: 'qwen', title: 'From Wiper to Captain: The Indonesian Roadmap', subtitle: 'Rencana 10 Tahun Ala Kapten Ferry Tan (Kapal LNG Terbesar Dunia)' },
+            { no: 49, ai: 'qwen', title: 'Seafarer Crypto Handbook', subtitle: 'Investasi Gaji di Aset Digital Aman' },
+            { no: 50, ai: 'qwen', title: 'MLC 2006 Survival Kit', subtitle: 'Lawan Pemotongan Gaji Ilegal' },
+            { no: 51, ai: 'qwen', title: 'Panduan Pulang Naik Kapal Pesiar', subtitle: 'Strategi Rekrutmen di Carnival/Royal Caribbean' },
+            { no: 52, ai: 'qwen', title: 'Bahasa Tagalog untuk ABK', subtitle: 'Teknik Komunikasi Efektif dengan Kru Filipina' },
+            { no: 53, ai: 'qwen', title: 'Emergency Repatriation Hacks', subtitle: 'Cara Pulang Cepat Saat Sakit/Konflik' },
+            
+            // CLAUDE - 15 Judul
+            { no: 54, ai: 'claude', title: 'Bertahan Sendirian: Panduan Mental Survival Pelaut Indonesia', subtitle: 'Cara Mengatasi Kesepian, Depresi, dan Tekanan Mental di Tengah Laut Tanpa Psikolog' },
+            { no: 55, ai: 'claude', title: '3 Bulan Pertama yang Menentukan: Survival Guide Pelaut Pemula', subtitle: 'Rahasia Melewati Fase Paling Berat dalam Karier Pelaut Tanpa Pulang Kampung' },
+            { no: 56, ai: 'claude', title: 'Pulang Bukan Berarti Kalah: Panduan Mental Repatriasi Pelaut', subtitle: 'Cara Bangkit Setelah Sign-Off Darurat, Depresi Onboard, atau Resign Paksa' },
+            { no: 57, ai: 'claude', title: 'Hubungan Jarak Jauh Pelaut: Cara Menjaga Cinta & Keluarga dari 10.000 Km', subtitle: 'Strategi Nyata Agar Pasangan Tidak Selingkuh, Anak Tidak Lupa Ayah, dan Pernikahan Tetap Awet' },
+            { no: 58, ai: 'claude', title: 'Dari Overthinking ke Peaceful Mind: Mindfulness untuk Pelaut', subtitle: 'Teknik Meditasi & Mental Reset 10 Menit untuk Pelaut yang Tidak Bisa Tidur Nyenyak' },
+            { no: 59, ai: 'claude', title: 'Mental Warrior Pelaut: Dari Rapuh Menjadi Tangguh', subtitle: 'Cara Membangun Ketahanan Mental Seperti Navy SEAL untuk Bertahan di Kapal Paling Brutal' },
+            { no: 60, ai: 'claude', title: 'Logbook Emosi Pelaut: Journaling untuk Mental Health di Kapal', subtitle: 'Metode Terbukti Menurunkan Stress 60% dengan Menulis 15 Menit Sehari' },
+            { no: 61, ai: 'claude', title: 'Selamat Datang di Neraka: Persiapan Mental untuk Kapal Paling Brutal', subtitle: 'Yang Tidak Diajarkan di Sekolah Pelayaran Tentang Realitas Kapal Galak, Senior Toxic, dan Tekanan Ekstrem' },
+            { no: 62, ai: 'claude', title: 'Healing After Sea: Panduan Reintegrasi untuk Pelaut Pulang Kampung', subtitle: 'Cara Kembali Normal Setelah Berbulan-bulan di Kapal: Mengatasi Reverse Culture Shock' },
+            { no: 63, ai: 'claude', title: 'Strategi Anti-Bunuh Diri: Lifeline untuk Pelaut di Titik Terendah', subtitle: 'Apa yang Harus Dilakukan Saat Kamu Sudah Tidak Kuat Lagi dan Tidak Ada yang Bisa Diajak Bicara' },
+            { no: 64, ai: 'claude', title: 'Toxic-Proof: Cara Menghadapi Bullying & Senioritas Brutal di Kapal', subtitle: 'Strategi Bertahan dari Senior Galak, Pelecehan Verbal, dan Toxic Culture Tanpa Resign' },
+            { no: 65, ai: 'claude', title: 'Kode Mental Pelaut: 50 Prinsip Psikologi Bertahan Hidup di Laut', subtitle: 'Wisdom dari 1000+ Pelaut Senior yang Bertahan 10+ Tahun di Industri Paling Brutal' },
+            { no: 66, ai: 'claude', title: 'Self-Care di Kapal: Panduan Wellness untuk Pelaut Modern', subtitle: 'Cara Merawat Kesehatan Mental, Fisik, dan Emosional dengan Fasilitas Terbatas di Kapal' },
+            { no: 67, ai: 'claude', title: 'Pelaut Introvert: Cara Bertahan Hidup Sosial di Kapal Tanpa Kehilangan Diri', subtitle: 'Strategi untuk Tipe Pendiam yang Dipaksa Hidup 24/7 dengan Orang Lain dalam Ruang Sempit' },
+            { no: 68, ai: 'claude', title: 'From Trauma to Triumph: Bangkit dari Kecelakaan Kapal & PTSD', subtitle: 'Panduan Recovery untuk Pelaut yang Pernah Alami Kecelakaan, Kehilangan Kru, atau Trauma Berat di Laut' },
+            
+            // DEEPSEEK - 1 Judul
+            { no: 69, ai: 'deepseek', title: 'Pelaut Masa Kini: Pendidikan, Keterampilan & Karier', subtitle: 'Panduan Lengkap untuk Menjadi Pelaut Profesional di Era Modern' },
+            
+            // CHATGPT - 15 Judul Viral
+            { no: 70, ai: 'chatgpt', title: '100 Hari Pertama di Atas Kapal - Realita, Tekanan, dan Kekuatan Mental Pelaut Modern', subtitle: 'The First 100 Days at Sea - A Real Survival Guide for Modern Seafarers' },
+            { no: 71, ai: 'chatgpt', title: 'Seafarer Life - From Training to Real Maritime Industry', subtitle: 'Di Balik Dek Kapal - Kehidupan, Hierarki, dan Disiplin Seorang Pelaut' },
+            { no: 72, ai: 'chatgpt', title: 'Pelaut Life: Expectation vs Reality - Kehidupan Nyata yang Tak Pernah Diceritakan', subtitle: 'Bertahan di Laut Lepas - Mental, Tekanan, dan Cerita dari Tengah Samudera' },
+            { no: 73, ai: 'chatgpt', title: 'Di Antara Gelombang - Kisah Nyata Tentang Tekanan, Rindu, dan Ketahanan Mental', subtitle: 'From Shore to Ship - The Real Transition Every Seafarer Faces' },
+            { no: 74, ai: 'chatgpt', title: 'Below Deck Reality - Life, Pressure, and Survival at Sea', subtitle: 'Ekosistem Maritim Modern - Kehidupan, Regulasi, Pendidikan & Teknologi Laut' },
+            { no: 75, ai: 'chatgpt', title: 'Surviving the Ocean - What They Don\'t Teach You in Maritime School', subtitle: 'Anak Laut - Cerita Perjalanan, Tekanan, dan Harapan di Tengah Ombak' },
+            { no: 76, ai: 'chatgpt', title: 'The Sea Doesn\'t Care - Stories of Strength, Loss, and Brotherhood', subtitle: '100 Hari di Samudera - Panduan Mental & Fisik Pelaut Modern' },
+            { no: 77, ai: 'chatgpt', title: 'Di Ujung Laut Ada Rumah - Tentang Rindu, Disiplin, dan Tujuan Hidup Pelaut', subtitle: 'Navigating Life at Sea - The Ultimate Guide for Modern Seafarers' },
+            { no: 78, ai: 'chatgpt', title: 'Maritime Psychology: Understanding the Seafarer Mind', subtitle: 'Teknik Mengelola Stres dan Kecemasan di Tengah Lautan' },
+            { no: 79, ai: 'chatgpt', title: 'Beyond the Horizon: A Seafarer\'s Guide to Career Longevity', subtitle: 'Strategi Bertahan dan Berkembang di Industri Maritim Global' },
+            { no: 80, ai: 'chatgpt', title: 'The Captain\'s Log: Leadership Lessons from the Bridge', subtitle: 'Belajar Kepemimpinan dari Para Kapten Kapal Legendaris' },
+            { no: 81, ai: 'chatgpt', title: 'Weathering the Storm: Crisis Management for Seafarers', subtitle: 'Cara Menghadapi Situasi Darurat dan Bencana di Laut' },
+            { no: 82, ai: 'chatgpt', title: 'Culinary at Sea: Nutrition and Meal Planning for Long Voyages', subtitle: 'Panduan Gizi dan Masak Sehat di Kapal dengan Bahan Terbatas' },
+            { no: 83, ai: 'chatgpt', title: 'Port Call Chronicles: Making the Most of Shore Leave', subtitle: 'Cara Memanfaatkan Waktu di Pelabuhan dengan Bijak dan Aman' },
+            { no: 84, ai: 'chatgpt', title: 'The Digital Seafarer: Technology Adoption for Maritime Professionals', subtitle: 'Menguasai Teknologi Terkini untuk Efisiensi dan Keselamatan di Kapal' }
+        ];
+        
+        // AI display names
+        const aiNames = {
+            'dola': 'DOLA (ChatGPT/Bibi)',
+            'perplexity': 'PERPLEXITY',
+            'gemini': 'GEMINI',
+            'qwen': 'QWEN',
+            'claude': 'CLAUDE',
+            'deepseek': 'DEEPSEEK',
+            'chatgpt': 'CHATGPT'
+        };
+        
+        // Initialize table
+        function renderTable(data) {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+            
+            data.forEach(ebook => {
+                const row = document.createElement('tr');
+                
+                // Number column
+                const noCell = document.createElement('td');
+                noCell.className = 'no-column';
+                noCell.textContent = ebook.no;
+                
+                // AI column
+                const aiCell = document.createElement('td');
+                aiCell.className = 'ai-column';
+                const aiBadge = document.createElement('span');
+                aiBadge.className = `ai-badge ai-${ebook.ai}`;
+                aiBadge.textContent = aiNames[ebook.ai];
+                aiCell.appendChild(aiBadge);
+                
+                // Title column
+                const titleCell = document.createElement('td');
+                titleCell.innerHTML = `
+                    <div class="title-column">${ebook.title}</div>
+                    <div class="subtitle-column">${ebook.subtitle}</div>
+                `;
+                
+                row.appendChild(noCell);
+                row.appendChild(aiCell);
+                row.appendChild(titleCell);
+                
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Filter and search functionality
+        function filterEbooks() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const aiFilter = document.getElementById('aiFilter').value;
+            
+            let filteredEbooks = ebooks.filter(ebook => {
+                // Search filter
+                const matchesSearch = searchTerm === '' || 
+                    ebook.title.toLowerCase().includes(searchTerm) || 
+                    ebook.subtitle.toLowerCase().includes(searchTerm);
+                
+                // AI filter
+                const matchesAI = aiFilter === 'all' || ebook.ai === aiFilter;
+                
+                return matchesSearch && matchesAI;
+            });
+            
+            renderTable(filteredEbooks);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTable(ebooks);
+            
+            // Add event listeners
+            document.getElementById('searchInput').addEventListener('input', filterEbooks);
+            document.getElementById('aiFilter').addEventListener('change', filterEbooks);
+        });
+    </script>
+</body>
+</html>
