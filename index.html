@@ -546,7 +546,7 @@
             { no: 84, ai: 'chatgpt', title: 'The Digital Seafarer: Technology Adoption for Maritime Professionals', subtitle: 'Menguasai Teknologi Terkini untuk Efisiensi dan Keselamatan di Kapal' }
         ];
         
-        // AI display names
+        // Nama AI untuk ditampilkan
         const aiNames = {
             'dola': 'DOLA (ChatGPT/Bibi)',
             'perplexity': 'PERPLEXITY',
@@ -557,7 +557,7 @@
             'chatgpt': 'CHATGPT'
         };
         
-        // Initialize table
+        // Fungsi untuk menampilkan tabel
         function renderTable(data) {
             const tableBody = document.getElementById('tableBody');
             tableBody.innerHTML = '';
@@ -565,12 +565,12 @@
             data.forEach(ebook => {
                 const row = document.createElement('tr');
                 
-                // Number column
+                // Kolom nomor
                 const noCell = document.createElement('td');
                 noCell.className = 'no-column';
                 noCell.textContent = ebook.no;
                 
-                // AI column
+                // Kolom AI
                 const aiCell = document.createElement('td');
                 aiCell.className = 'ai-column';
                 const aiBadge = document.createElement('span');
@@ -578,7 +578,7 @@
                 aiBadge.textContent = aiNames[ebook.ai];
                 aiCell.appendChild(aiBadge);
                 
-                // Title column
+                // Kolom judul
                 const titleCell = document.createElement('td');
                 titleCell.innerHTML = `
                     <div class="title-column">${ebook.title}</div>
@@ -593,18 +593,18 @@
             });
         }
         
-        // Filter and search functionality
+        // Fungsi untuk filter dan pencarian
         function filterEbooks() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const aiFilter = document.getElementById('aiFilter').value;
             
             let filteredEbooks = ebooks.filter(ebook => {
-                // Search filter
+                // Filter pencarian
                 const matchesSearch = searchTerm === '' || 
                     ebook.title.toLowerCase().includes(searchTerm) || 
                     ebook.subtitle.toLowerCase().includes(searchTerm);
                 
-                // AI filter
+                // Filter AI
                 const matchesAI = aiFilter === 'all' || ebook.ai === aiFilter;
                 
                 return matchesSearch && matchesAI;
@@ -613,11 +613,11 @@
             renderTable(filteredEbooks);
         }
         
-        // Initialize
+        // Inisialisasi saat halaman dimuat
         document.addEventListener('DOMContentLoaded', () => {
             renderTable(ebooks);
             
-            // Add event listeners
+            // Tambahkan event listener
             document.getElementById('searchInput').addEventListener('input', filterEbooks);
             document.getElementById('aiFilter').addEventListener('change', filterEbooks);
         });
